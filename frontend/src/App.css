@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap');
+
+.App{
+    min-height:100vh;
+    display:flex;
+    background-image : url('./people.jpg');
+     background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+.white-placeholder::placeholder {
+    color: 
+    /* rgb(103, 234, 237) */
+   
+    rgb(9, 117, 119)
+  }
+
+  

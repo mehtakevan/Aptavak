@@ -1,0 +1,222 @@
+import{ Button } from "@chakra-ui/button";
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { Input, InputGroup, InputRightElement} from "@chakra-ui/input";
+import { VStack} from "@chakra-ui/layout";
+import React, { useState } from "react";
+import { useToast } from '@chakra-ui/react';
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+
+const Signup = () => {
+  const[show , setShow] = useState(false)
+  const[name, setName] = useState()
+  const[email, setEmail] = useState();
+  const[password, setPassword] = useState();
+  const[confirmpassword, setConfirmpassword] = useState();
+  const[pic, setPic] = useState();
+  const[loading, setLoading] = useState(false);
+  const toast = useToast()
+  const history =useHistory();
+
+  const handleClick = () => setShow(!show);
+
+  const postDetails = (pics) => {
+     setLoading(true);
+     if(pics===undefined)
+     {
+      toast({
+        title: 'Please select an image!',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      return;
+     }
+     if(pics.type==="image/jpeg" || pics.type==="image/png")
+     {
+      const data = new FormData();
+      data.append("file",pics);
+      data.append("upload_preset","aptavak");
+      data.append("cloud_name","dqbk5ct42");
+      fetch("https://api.cloudinary.com/v1_1/dqbk5ct42/image/upload",{
+        method: "post",
+        body: data,
+      }).then((res) => res.json())
+        .then(data => {
+          setPic(data.url.toString());
+          console.log(data.url.toString());
+          setLoading(false);
+        })
+        .catch((err)=>{
+          console.log(err);
+          setLoading(false);
+        });
+     }
+     else{
+      toast({
+        title: 'Please select an image!',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+       setLoading(false);
+       return;
+     }
+
+  };
+  const submitHandler = async() => {
+         setLoading(true);
+         if(!name || !email || !password || !confirmpassword)
+         {
+          toast({
+            title: 'Please fill all the fields',
+            status: 'warning',
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+          });
+          setLoading(false);
+          return;
+         }
+         if(password !== confirmpassword)
+         {
+          toast({
+            title: 'Passwords do not match!',
+            status: 'warning',
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+          });
+          return;
+         }
+         try{
+          const config = {
+            headers:{
+              "Content-type": "application/json",
+            },
+          };
+
+          const{data} = await axios.post(
+            '/api/user/',
+          {name,email,password,pic},
+          config
+          );
+          console.log(data);
+          toast({
+            title: 'Registration Successful',
+            status: 'success',
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+          });
+          localStorage.setItem('userInfo',JSON.stringify(data));
+          setLoading(false);
+          history.pushState('/chats')
+          
+         }catch(error)
+         {
+          console.log(error);
+          // toast({
+          //   title: 'Error Occured!',
+          //   description: error.response.data.message,
+          //   status: 'error',
+          //   duration: 5000,
+          //   isClosable: true,
+          //   position: "bottom",
+          // });
+          // setLoading(false);
+         }
+  };
+
+  return  (
+    <VStack spacing='5px' color="white" >
+      <FormControl id='first-name' isRequired>
+      <FormLabel  color={"white"}>Name</FormLabel>
+         <Input
+         placeholder="Enter your Name"
+         onChange={(e) => setName(e.target.value)}
+         style={{ borderColor: "white" }}
+         className="white-placeholder"
+         />
+        
+        
+      </FormControl>
+      <FormControl id='email' isRequired>
+        <FormLabel  color={"white"}>Email</FormLabel>
+         <Input
+         placeholder="Enter your Email"
+         onChange={(e) => setEmail(e.target.value)}
+         style={{ borderColor: "white"}}
+         className="white-placeholder"
+         />
+      </FormControl>
+      <FormControl id='password' isRequired>
+        <FormLabel  color={"white"}>Password</FormLabel>
+        <InputGroup>
+        <Input
+         type = {show?"text":"password"}
+         placeholder="Enter your Password"
+         onChange={(e) => setPassword(e.target.value)}
+         style={{ borderColor: "white" }}
+         className="white-placeholder"
+         />
+         <InputRightElement width="4.5rem" >
+          <Button h="1.75rem" size="5m" color="yellow" background="teal"onClick={handleClick}>
+             {show ? "Hide" : "show"} 
+          </Button>
+          </InputRightElement>
+        </InputGroup>
+
+      </FormControl>
+
+      <FormControl id='password' isRequired>
+        <FormLabel  color={"white"}>Confirm Password</FormLabel>
+        <InputGroup size="md">
+        <Input
+         type = {show?"text":"password"}
+         placeholder="Confirm Password"
+         onChange={(e) => setConfirmpassword(e.target.value)}
+         style={{ borderColor: "white" }}
+         className="white-placeholder"
+         />
+         <InputRightElement width="4.5rem">
+          <Button h="1.75rem" size="5m" color="yellow" background="teal" onClick={handleClick}>
+             {show ? "Hide" : "show"} 
+          </Button>
+          </InputRightElement>
+        </InputGroup>
+</FormControl>
+
+<FormControl id="pic">
+        <FormLabel  color={"white"}>Upload your picture</FormLabel>
+    
+         <Input
+         color="yellow"
+         type="file"
+         background= "rgba(0,0,0,0.5)"
+         p={1.5}
+         accept="image/*"
+         placeholder="Enter your Name"
+         onChange={(e) => postDetails(e.target.files[0])}
+         style={{ borderColor: "white"  } }
+         />
+        
+      </FormControl>
+      
+      <Button
+        colorScheme="teal"
+        width="100%"
+        style = {{marginTop: 15}}
+        onClick={submitHandler}
+        isLoading = {loading}
+        >
+          Sign Up
+      </Button>
+    </VStack>
+  );
+  
+}
+
+export default Signup
