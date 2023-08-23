@@ -4,8 +4,21 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import Login from '../components/Authentication/Login';
 import Signup from '../components/Authentication/Signup';
 import { withTheme } from '@emotion/react';
+import { useHistory } from 'react-router-dom';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 const HomePage = () => {
+
+  const history = useHistory();
+  useEffect(() =>{
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    // setUser(userInfo);
+
+   if(userInfo){
+      history.push("/chats");
+   }
+  }, [history]);
+  
   return (
     <Container maxW="xl" centerContent>
       <Box

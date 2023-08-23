@@ -1,22 +1,44 @@
+// import React from 'react';
+// import ReactDOM from 'react-dom/client';
+// import './index.css';
+// import App from './App';
+// import { ChakraProvider } from '@chakra-ui/react';
+// import {BrowserRouter} from "react-router-dom";
+// import ChatProvider from './Context/ChatProvider';
+
+// document.getElementById("root")
+// React.render(
+
+//   <ChatProvider>
+//     <BrowserRouter>
+    
+//     <ChakraProvider>
+
+   
+//     <App />
+//     </ChakraProvider>
+//     </BrowserRouter>
+//   </ChatProvider>,
+ 
+// );
+
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { ChakraProvider } from '@chakra-ui/react';
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
+import ChatProvider from './Context/ChatProvider';
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-    
     <ChakraProvider>
-
-   
-    <App />
+      <BrowserRouter>
+        <ChatProvider>
+          <App />
+        </ChatProvider>
+      </BrowserRouter>
     </ChakraProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
-
