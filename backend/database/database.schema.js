@@ -27,7 +27,10 @@ const chatModel = mongoose.Schema
             type:mongoose.Schema.Types.ObjectId,
             ref : "Message",
         },
-
+        groupAdmin:{
+            type : mongoose.Schema.Types.ObjectId,
+            ref : "User",
+        },
     },
     {
         timestamps : true,
@@ -95,6 +98,7 @@ const usermodel = mongoose.Schema
 );
 
 usermodel.methods.matchPassword = async function(psw){
+    console.log("In match Password");
     return bcrypt.compare(psw,this.password);
 }
 
@@ -103,7 +107,7 @@ usermodel.pre("save", async function(next){
         next();
     }
 
-    const salt = await bcrypt.genSalt(20);
+    const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
 })
 

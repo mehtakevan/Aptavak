@@ -3,6 +3,7 @@ const { User } = require("../database/database.schema");
 
 
 const protect = (async (req,res,next) =>{
+    console.log("checking auth token");
     let token;
 
     if(
@@ -14,12 +15,13 @@ const protect = (async (req,res,next) =>{
 
             //decodes the token
             const decoded = jwt.verify(token,process.env.JWT_SECRET);
-
-            req.user = await User.findbyId(decoded.id).select("-password");
-
+            
+            req.user = await User.findById(decoded.id).select("-password");
+            console.log("authorization completed");
             next();
         }catch(error){
             res.status(401);
+            console.log(error);
             throw new Error("Not authorized, No token");
         }
     }

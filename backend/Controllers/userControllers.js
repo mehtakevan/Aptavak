@@ -44,7 +44,7 @@ const registerUser = (async (req,res) =>{
 const authUser = (async (req,res) =>{
     console.log("In auth User");
     const { email, password} = req.body;
-    
+
     const user = await User.findOne({ email });
 
     if(User && (await user.matchPassword(password))){
@@ -62,7 +62,9 @@ const authUser = (async (req,res) =>{
     
 });
 
+// /api/user?search=kevan
 const allUsers = (async(req,res) =>{
+    console.log("In allusers");
     const keyword = req.query.search?{
         $or:[
             {name :{$regex : req.query.search,$options:"i"}},
