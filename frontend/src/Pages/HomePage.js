@@ -13,7 +13,7 @@ const HomePage = () => {
   const history = useHistory();
   const { user } = ChatState();
   useEffect(() =>{
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const user = JSON.parse(localStorage.getItem("userInfo"));
     // setUser(userInfo);
 
    if(user){
