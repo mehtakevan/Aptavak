@@ -25,7 +25,7 @@ const io = require('socket.io')(server,{
     },
 });
 
-io.on('setup',(socket)=>{
+io.on("connection",(socket)=>{
     console.log("connected to socket.io");
 
     socket.on("setup",(userData)=>{
