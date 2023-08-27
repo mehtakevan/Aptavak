@@ -40,5 +40,6 @@ const sendMessage = (async(req,res) =>{
 });
 
 module.exports = {
-    sendMessage : sendMessage
+    sendMessage : sendMessage,
+    allMessages : allMessages
 }

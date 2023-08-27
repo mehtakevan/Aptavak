@@ -1,30 +1,55 @@
-import { Box } from "@chakra-ui/layout";
-import { ChatState } from "../Context/ChatProvider";
 import SideDrawer from "../components/Miscellaneous/SideDrawer";
 import MyChats from "../components/Miscellaneous/MyChats";
-import ChatBox from "../components/Miscellaneous/ChatBox";
 
-const ChatPage = () => {
+import { Box, Flex } from "@chakra-ui/layout"; // Import Flex for responsive layout
+import { useState } from "react";
+import ChatBox from "../components/ChatBox";
+import { ChatState } from "../Context/ChatProvider";
+
+const Chatpage = () => {
+  const [fetchAgain, setFetchAgain] = useState(false);
   const { user } = ChatState();
 
-    
-
   return (
-  
-  <div style={{ width: "100%"}}>
-     {user && <SideDrawer />}
-  <Box d= "flex"
-  justifyContent='space-between'
-  w='100%'
-  h='91.5vh'
-  p='10px'
-  >
-    {user && <MyChats />} 
-     {user && <ChatBox />}
-  </Box>
-  </div>
-   
+    <div style={{ width: "100%" }}>
+      {user && <SideDrawer />}
+      <Flex w="100%" h="91.5vh" p="20px">
+        <Box flex="0 0 80%" mr={4}>
+          {user && <MyChats fetchAgain={fetchAgain}  />}
+        </Box>
+        <Box flex="1">
+          {user && (
+            <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+          )}
+        </Box>
+      </Flex>
+    </div>
   );
-}
+};
 
-export default ChatPage
+export default Chatpage;
+// import { Box } from "@chakra-ui/layout";
+// import { useState } from "react";
+// import ChatBox from "../components/ChatBox";
+// import MyChats from "../components/Miscellaneous/MyChats";
+// import SideDrawer from "../components/Miscellaneous/SideDrawer";
+// import { ChatState } from "../Context/ChatProvider";
+
+// const Chatpage = () => {
+//   const [fetchAgain, setFetchAgain] = useState(false);
+//   const { user } = ChatState();
+
+//   return (
+//     <div style={{ width: "100%" }}>
+//       {user && <SideDrawer />}
+//       <Box d="flex" justifyContent="space-between" w="100%" h="91.5vh" p="10px">
+//         {user && <MyChats fetchAgain={fetchAgain} />}
+//         {user && (
+//           <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+//         )}
+//       </Box>
+//     </div>
+//   );
+// };
+
+// export default Chatpage;

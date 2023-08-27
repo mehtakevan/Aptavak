@@ -32,13 +32,15 @@ import ChatProvider from './Context/ChatProvider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider>
+   
       <BrowserRouter>
+      <ChakraProvider>
         <ChatProvider>
           <App />
         </ChatProvider>
+        </ChakraProvider>
       </BrowserRouter>
-    </ChakraProvider>
+    
   </React.StrictMode>,
   document.getElementById('root')
 );

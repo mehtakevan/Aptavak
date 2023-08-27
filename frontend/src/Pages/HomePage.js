@@ -6,15 +6,17 @@ import Signup from '../components/Authentication/Signup';
 import { withTheme } from '@emotion/react';
 import { useHistory } from 'react-router-dom';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { ChatState } from '../Context/ChatProvider';
 
 const HomePage = () => {
 
   const history = useHistory();
+  const { user } = ChatState();
   useEffect(() =>{
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     // setUser(userInfo);
 
-   if(userInfo){
+   if(user){
       history.push("/chats");
    }
   }, [history]);
