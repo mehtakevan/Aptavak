@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react'; 
+import { useState } from 'react';
 import { Box, Text, Flex } from "@chakra-ui/layout";
 import {  Menu, MenuButton,MenuList, MenuItem,MenuDivider, Tooltip, Input, useToast } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/button";
@@ -439,20 +440,6 @@ function SideDrawer() {
 
       
     </Box>
- 
-
-
-
-
-
-
-  
-
-
-
-
-
-
 
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />

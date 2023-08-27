@@ -11,10 +11,10 @@ const HomePage = () => {
 
   const history = useHistory();
   useEffect(() =>{
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const user = JSON.parse(localStorage.getItem("userInfo"));
     // setUser(userInfo);
 
-   if(userInfo){
+   if(user){
       history.push("/chats");
    }
   }, [history]);
