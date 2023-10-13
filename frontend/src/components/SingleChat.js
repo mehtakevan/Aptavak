@@ -3,19 +3,20 @@ import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import "./styles.css";
 import { IconButton, Spinner, useToast } from "@chakra-ui/react";
-import { getSender,  getSenderFull } from "../config/ChatLogic";
+import { getSender, getSenderFull } from "../config/ChatLogics";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import ProfileModal from "./Miscellaneous/ProfileModal";
+import ProfileModal from "./miscellaneous/ProfileModal";
 import ScrollableChat from "./ScrollableChat";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
+import EmojiPicker from "emoji-picker-react";
 
 import io from "socket.io-client";
-import UpdateGroupChatModal from "./Miscellaneous/UpdateGroupChatModal";
+import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "http://localhost:5000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -25,7 +26,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
+  const [showPicker, SetShowPicker] = useState(false);
   const toast = useToast();
+
+  const onEmojiClick = (emojiObject) => {
+    setNewMessage((prevMessage) => prevMessage + emojiObject.emoji);
+    SetShowPicker(false);
+  };
 
   const defaultOptions = {
     loop: true,
@@ -203,7 +210,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             p={3}
             bg="#E8E8E8"
             w="100%"
-            h="92%"
+            h="100%"
             borderRadius="lg"
             overflowY="hidden"
           >
@@ -225,31 +232,49 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               onKeyDown={sendMessage}
               id="first-name"
               isRequired
-              position= "absolute"
-              bottom="35px"
-              left="610px"
-              width="48%"
-
+              mt={3}
             >
               {istyping ? (
                 <div>
                   <Lottie
                     options={defaultOptions}
                     // height={50}
-                    width={50}
-                    style={{ marginBottom: 150, marginLeft: 0 }}
+                    width={70}
+                    style={{ marginBottom: 15, marginLeft: 0 }}
                   />
                 </div>
               ) : (
                 <></>
               )}
-              <Input
-                variant="filled"
-                bg="#E0E0E0"
-                placeholder="Enter a message.."
-                value={newMessage}
-                onChange={typingHandler}
-              />
+              <div style={{ position: "relative" }}>
+                <Input
+                  variant="filled"
+                  bg="#E0E0E0"
+                  placeholder="Enter a message.."
+                  value={newMessage}
+                  onChange={typingHandler}
+                />
+                <button
+                  onClick={() => SetShowPicker((val) => !val)}
+                  style={{
+                    position: "absolute",
+                    right: "5px", // Adjust the position as needed
+                    top: "50%", // Adjust the position as needed
+                    transform: "translateY(-50%)", // Center vertically
+                    backgroundColor: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  😊 
+                </button>
+                {showPicker && (
+                  <EmojiPicker
+                    pickerstyle={{ width: "100%" }}
+                    onEmojiClick={onEmojiClick}
+                  />
+                )}
+              </div>
             </FormControl>
           </Box>
         </>

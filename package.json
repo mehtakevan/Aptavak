@@ -1,21 +1,28 @@
 {
-  "name": "aptavak",
+  "name": "chat-app",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon backend/server.js"
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js",
+    "build": "npm install --legacy-peer-deps && npm install --legacy-peer-deps --prefix frontend && npm run build --prefix frontend"
   },
-  "author": "kevan_mehta",
+  "keywords": [
+    "mern",
+    "chat-app"
+  ],
+  "author": "Kevan & Birva",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.1",
-    "mongoose": "^7.4.3",
-    "nodemon": "^3.0.1",
-    "react-notification-badge": "^1.5.1",
-    "socket.io": "^4.7.2"
+    "colors": "^1.4.0",
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.9",
+    "nodemon": "^2.0.7",
+    "socket.io": "^4.1.2"
   }
 }
