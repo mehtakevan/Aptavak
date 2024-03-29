@@ -51,7 +51,7 @@ const Signup = () => {
         },
       };
       const { data } = await axios.post(
-        "/api/user",
+        "https://aptavak.vercel.app/api/user",
         {
           name,
           email,
