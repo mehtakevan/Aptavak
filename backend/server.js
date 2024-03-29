@@ -13,7 +13,7 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin : [""],
+  origin : ["https://aptavak.vercel.app/"],
   methods :["POST","GET"],
   credentials:true
 }));
