@@ -4,9 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node backend/server.js",
-    "server": "nodemon backend/server.js",
-    "build": "npm install --force"
+    "start": "nodemon server.js",
+    "run": "nodemon index.js"
   },
   "keywords": [
     "mern",
