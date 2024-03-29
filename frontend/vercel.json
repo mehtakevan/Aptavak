@@ -5,10 +5,6 @@
         "src": "index.js",
         "use": "@vercel/node"
       }
-    ],
-    "install": {
-      "dest": "/",
-      "cmd": "npm install --force"
-    }
+    ]
   }
   
