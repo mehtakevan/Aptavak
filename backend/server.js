@@ -43,7 +43,7 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "https://aptavak-frontend.vercel.app/",
+    origin: "https://aptavak.vercel.app/",
     // credentials: true,
   },
 });
